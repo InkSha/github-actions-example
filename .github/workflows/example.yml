@@ -1,0 +1,40 @@
+# 名称
+name: github-actions-example
+
+# 运行名称
+run-name: ${{ github.repository }} is github actions example
+
+# 触发条件
+on:
+  # push 代码
+  push:
+    # push 分支
+    branches:
+      - main
+      - master
+      - prod
+      - dev
+      - test
+
+# 工作流程
+jobs:
+  # 可自定义的操作名称
+  build:
+    # 运行于 ubuntu-lastest
+    runs-on: ubuntu-latest
+
+    # 执行步骤
+    steps:
+      # 将存储库复制到运行容器
+      - uses: actions/checkout@v4
+      # 安装 node
+      - uses: actions/setup-node@v4
+        # 使用 node v20 版本
+        with:
+          node-version: '20'
+      # 执行命令
+      - run: npm install
+      # 构建
+      - run: npm run build
+      # 运行
+      - run: npm run serve
